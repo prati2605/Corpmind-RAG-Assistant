@@ -1,0 +1,15 @@
+Acceptable Use of IT Resources
+Northwind Analytics Pvt. Ltd. - Internal - Effective 1 January 2026
+
+Personal use
+Limited personal use of company devices is allowed if it does not interfere with work or create security risk.
+
+Software
+Only software from the Northwind Software Center may be installed. Pirated or unlicensed software is prohibited.
+
+Generative AI tools
+Employees must use only the approved Northwind AI Gateway for generative AI. Confidential or Restricted data
+must never be pasted into public AI tools such as consumer chatbots.
+
+Monitoring
+Company systems are monitored for security purposes in line with applicable law.

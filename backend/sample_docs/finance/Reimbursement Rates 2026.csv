@@ -1,0 +1,8 @@
+Category,Item,Limit (INR),Unit,Approval
+Communication,Mobile bill,1000,per month,Manager
+Communication,Home internet,1500,per month,Manager
+Meals,Team lunch,800,per person,Manager
+Local travel,Car mileage,12,per km,Manager
+Local travel,Two-wheeler mileage,6,per km,Manager
+Client,Client entertainment,2500,per person,VP
+Learning,Training and certification,50000,per year,Department head

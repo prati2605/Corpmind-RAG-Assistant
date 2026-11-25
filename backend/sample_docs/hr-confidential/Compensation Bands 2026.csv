@@ -1,0 +1,7 @@
+Grade,Title band,Salary min (INR lakh p.a.),Salary max (INR lakh p.a.),Bonus target
+L1,Associate,6,9,5%
+L2,Analyst,9,14,8%
+L3,Senior Analyst,14,22,10%
+L4,Lead,22,32,12%
+L5,Manager,32,45,15%
+L6,Director,45,70,20%

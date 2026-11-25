@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* Self-hosted fonts: no requests to third-party font CDNs from an internal tool. */
+@import "@fontsource/public-sans/400.css";
+@import "@fontsource/public-sans/500.css";
+@import "@fontsource/public-sans/600.css";
+@import "@fontsource/public-sans/700.css";
+@import "@fontsource/source-serif-4/400.css";
+@import "@fontsource/source-serif-4/400-italic.css";
+@import "@fontsource/source-serif-4/600.css";
+
+/* Design tokens: a records office. Ink, paper, ledger green, and a highlighter reserved for cited text. */
+@theme {
+  --color-ink: #1b2a3a;
+  --color-ink-soft: #33465a;
+  --color-paper: #f6f7f4;
+  --color-sheet: #ffffff;
+  --color-rule: #d6dcd8;
+  --color-rule-strong: #b9c2bd;
+  --color-muted: #5b6b78;
+  --color-ledger: #2f6b5e;
+  --color-ledger-dark: #24564b;
+  --color-ledger-tint: #e3eeea;
+  --color-mark: #f3da63;
+  --color-mark-soft: #fbf0b8;
+  --color-brick: #a8433a;
+  --color-brick-tint: #f6e4e1;
+  --color-amber: #9a6b12;
+  --color-amber-tint: #f8eccd;
+
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, serif;
+
+  /* Type scale (1.2 minor third) */
+  --text-xs: 0.75rem;
+  --text-sm: 0.833rem;
+  --text-base: 1rem;
+  --text-lg: 1.2rem;
+  --text-xl: 1.44rem;
+  --text-2xl: 1.728rem;
+  --text-3xl: 2.074rem;
+}
+
+html, body, #root { height: 100%; }
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Edge adds its own reveal button to password fields; we provide one, so hide Edge's. */
+input::-ms-reveal, input::-ms-clear { display: none; }
+
+:focus-visible {
+  outline: 2px solid var(--color-ledger);
+  outline-offset: 2px;
+}
+
+/* Answers and source excerpts are set in the serif: words that come from documents. */
+.prose-doc {
+  font-family: var(--font-serif);
+  font-size: 1.04rem;
+  line-height: 1.68;
+  max-width: 70ch;
+}
+.prose-doc p { margin: 0 0 0.8em; }
+.prose-doc p:last-child { margin-bottom: 0; }
+.prose-doc ul, .prose-doc ol { margin: 0 0 0.8em 1.3em; }
+.prose-doc ul { list-style: disc; }
+.prose-doc ol { list-style: decimal; }
+.prose-doc li { margin: 0.2em 0; }
+.prose-doc h1, .prose-doc h2, .prose-doc h3, .prose-doc h4 {
+  font-family: var(--font-sans); font-weight: 600; font-size: 1rem; margin: 1em 0 0.4em;
+}
+.prose-doc strong { font-weight: 600; }
+.prose-doc table { border-collapse: collapse; margin: 0.6em 0 1em; font-size: 0.93rem; font-family: var(--font-sans); }
+.prose-doc th, .prose-doc td { border: 1px solid var(--color-rule); padding: 0.4em 0.65em; text-align: left; vertical-align: top; }
+.prose-doc th { background: var(--color-paper); font-weight: 600; }
+.prose-doc code { font-size: 0.9em; background: var(--color-paper); padding: 0.1em 0.3em; border-radius: 3px; }
+
+/* The highlighter: only ever used on a cited passage. */
+.mark {
+  background: linear-gradient(transparent 12%, var(--color-mark) 12%, var(--color-mark) 88%, transparent 88%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 0.1em;
+}
+
+.source-pane-enter { animation: pane-in 180ms ease-out; }
+@keyframes pane-in { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+.typing span { animation: blink 1.2s infinite both; }
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink { 0%, 80%, 100% { opacity: 0.2; } 40% { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .source-pane-enter, .typing span { animation: none; }
+}

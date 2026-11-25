@@ -1,0 +1,58 @@
+# Full CorpMind stack: PostgreSQL + backend + frontend (nginx).
+#
+#   cp backend/.env.example backend/.env      # set JWT_SECRET_KEY and the LLM_* settings
+#   cp .env.example .env                       # set POSTGRES_PASSWORD
+#   docker compose -f docker-compose.prod.yml up -d --build
+#   docker compose -f docker-compose.prod.yml exec backend python -m app.scripts.create_admin --email you@company.com
+#
+# Open http://localhost:8080. Only nginx is published; the API and database stay on the internal network.
+# Put this behind HTTPS (a load balancer or reverse proxy with TLS) before real use.
+name: corpmind
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: corpmind
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: corpmind
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U corpmind -d corpmind"]
+      interval: 5s
+      retries: 20
+
+  backend:
+    build:
+      context: ./backend
+      args:
+        PRELOAD_MODELS: ${PRELOAD_MODELS:-true}
+    restart: unless-stopped
+    env_file: ./backend/.env            # JWT secret, LLM provider/model/key, thresholds
+    environment:
+      ENVIRONMENT: production
+      DATABASE_URL: postgresql+psycopg://corpmind:${POSTGRES_PASSWORD}@postgres:5432/corpmind
+      UPLOAD_DIR: /app/storage/uploads
+      CHROMA_DIR: /app/storage/chroma
+      CORS_ORIGINS: ${PUBLIC_URL:-http://localhost:8080}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}   # set true once served over HTTPS
+    volumes:
+      - storage:/app/storage            # uploaded files + ChromaDB index
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-8080}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  storage:

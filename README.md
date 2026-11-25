@@ -238,3 +238,11 @@ If a key is ever pushed by mistake, delete it at the provider and create a new o
 - [`docs/API.md`](docs/API.md): the API reference. Regenerate it with `python -m app.scripts.gen_api_docs`.
   Live interactive docs are at http://localhost:8000/docs.
 - [`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md): each project requirement and how it's met.
+
+## Copyright
+
+© 2026 Pratiksha Behera. All rights reserved.
+
+This repository is shared publicly for viewing and evaluation only (for example, by recruiters and
+instructors). No permission is granted to copy, modify, distribute or use this code, in whole or in
+part, without my written permission.
